@@ -9,6 +9,10 @@ This repository hosts the code for the article "Cross-modal variational inferenc
 
 This code uses the marvelous code of Thomas Grill, gently put on the internet at [the following address](https://github.com/grrrr/nsgt)
 
+Plese find the corresponding support page [here](https://domkirke.github.io/latent-transcription/)
+
+You can also find a bunch of pre-trained model [here]
+
 ### Model training :package:
 `lt_train.py` is the python script for MIDI training. It requires the training dataset, that you may find [here](http://www.wolfgang.wang/lt_set.zip). Possible instruments are : `Flute`, `Piano`, `Alto-Sax`, `Trumpet-C`, `Violin`. Training arguments for this script are : 
 
