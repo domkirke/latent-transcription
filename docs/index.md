@@ -34,10 +34,12 @@ Below we show some examples of reconstructions and transfer from random excerpts
 <div id="rec_flute" style="display: none;">
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/flute/ex_1_orig.mp3" type='audio/mp3'>
-</audio> (original)
+</audio> (original) <br/>
+
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/flute/ex_1_reco.mp3" type='audio/mp3'>
-</audio> (reconstructions)
+</audio> (reconstructions)<br/>
+
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/flute/ex_1_tf_1.mp3" type='audio/mp3'>
 </audio> <audio controls preload="auto" data-setup="{}" width="100%"> 
@@ -51,10 +53,12 @@ Below we show some examples of reconstructions and transfer from random excerpts
 <div id="rec_violin" style="display: none;">
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/violin/ex_2_orig.mp3" type='audio/mp3'>
-</audio> (original)
+</audio> (original) <br/>
+      
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/violin/ex_2_reco.mp3" type='audio/mp3'>
-</audio> (reconstructions)
+</audio> (reconstructions)<br/>
+
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/violin/ex_2_tf_1.mp3" type='audio/mp3'>
 </audio> <audio controls preload="auto" data-setup="{}" width="100%"> 
@@ -68,10 +72,12 @@ Below we show some examples of reconstructions and transfer from random excerpts
 <div id="rec_piano" style="display: none;">
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/piano/ex_2_orig.mp3" type='audio/mp3'>
-</audio> (original)
+</audio> (original)<br/>
+      
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/piano/ex_2_reco.mp3" type='audio/mp3'>
-</audio> (reconstructions)
+</audio> (reconstructions)<br/>
+
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/piano/ex_2_tf_1.mp3" type='audio/mp3'>
 </audio> <audio controls preload="auto" data-setup="{}" width="100%"> 
@@ -85,10 +91,12 @@ Below we show some examples of reconstructions and transfer from random excerpts
 <div id="2mx_reco" style="display: none;">
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/2-mixture/ex_7_orig.mp3" type='audio/mp3'>
-</audio> (original)
+</audio> (original)<br/>
+      
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/2-mixture/ex_7_reco.mp3" type='audio/mp3'>
-</audio> (reconstructions)
+</audio> (reconstructions)<br/>
+
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/2-mixture/ex_7_tf_1.mp3" type='audio/mp3'>
 </audio> <audio controls preload="auto" data-setup="{}" width="100%"> 
