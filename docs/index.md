@@ -17,7 +17,8 @@ This support page provides the following elements:
 
 Below we show some examples of reconstructions and transfer from random excerpts from the dataset. Once the NSGT is obtained, phase is reconstructed with a Griffin-Lim algorithm with about 30 iterations ; we thus also put the inversed original NSGT to have a good comparison basis. 
 
-Flute
+<a href="javascript:look('rec_flute');" title="Flute examples">Flute examples</a>
+<div id="rec_flute" style="display: none;">
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/flute/ex_1_orig.mp3" type='audio/mp3'>
 </audio> (original)
@@ -31,6 +32,24 @@ Flute
 </audio> <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/flute/ex_1_tf_3.mp3" type='audio/mp3'>
 </audio> (transfer)
+</div>
+
+<a href="javascript:look('rec_violin');" title="Violin examples">Violin examples</a>
+<div id="rec_violin" style="display: none;">
+<audio controls preload="auto" data-setup="{}" width="100%"> 
+<source src="audio/audio_reconstructions/violin/ex_2_orig.mp3" type='audio/mp3'>
+</audio> (original)
+<audio controls preload="auto" data-setup="{}" width="100%"> 
+<source src="audio/audio_reconstructions/violin/ex_2_reco.mp3" type='audio/mp3'>
+</audio> (original)
+<audio controls preload="auto" data-setup="{}" width="100%"> 
+<source src="audio/audio_reconstructions/violin/ex_2_tf_1.mp3" type='audio/mp3'>
+</audio> <audio controls preload="auto" data-setup="{}" width="100%"> 
+<source src="audio/audio_reconstructions/violin/ex_2_tf_2.mp3" type='audio/mp3'>
+</audio> <audio controls preload="auto" data-setup="{}" width="100%"> 
+<source src="audio/audio_reconstructions/violin/ex_2_tf_3.mp3" type='audio/mp3'>
+</audio> (transfer)
+</div>
 
 
 ## Symbol-to-signal inference
