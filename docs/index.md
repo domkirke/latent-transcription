@@ -23,7 +23,7 @@ This support page provides the following elements:
 * [Sound morphing and free navigation](#sound-morphing-and-free-navigation)
 
 <p align="center">
-<img src="figures/diagram.png" height="75%" width="75%">
+<img src="figures/diagram.png" height="50%" width="50%">
 </p>
 
 ## Reconstructions of instrumental sound distributions
