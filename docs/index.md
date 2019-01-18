@@ -15,6 +15,24 @@ This support page provides the following elements:
 
 ## Reconstructions of instrumental sound distributions
 
+Below we show some examples of reconstructions and transfer from random excerpts from the dataset. Once the NSGT is obtained, phase is reconstructed with a Griffin-Lim algorithm with about 30 iterations ; we thus also put the inversed original NSGT to have a good comparison basis. 
+
+Flute
+<audio controls preload="auto" data-setup="{}" width="100%"> 
+<source src="audio/audio_reconstructions/flute/ex_1_orig.mp3" type='audio/mp3'>
+</audio> (original)
+<audio controls preload="auto" data-setup="{}" width="100%"> 
+<source src="audio/audio_reconstructions/flute/ex_1_reco.mp3" type='audio/mp3'>
+</audio> (original)
+<audio controls preload="auto" data-setup="{}" width="100%"> 
+<source src="audio/audio_reconstructions/flute/ex_1_tf_1.mp3" type='audio/mp3'>
+</audio> <audio controls preload="auto" data-setup="{}" width="100%"> 
+<source src="audio/audio_reconstructions/flute/ex_1_tf_2.mp3" type='audio/mp3'>
+</audio> <audio controls preload="auto" data-setup="{}" width="100%"> 
+<source src="audio/audio_reconstructions/flute/ex_1_tf_3.mp3" type='audio/mp3'>
+</audio> (transfer)
+
+
 ## Symbol-to-signal inference
 
 ## Signal-to-symbol inference
