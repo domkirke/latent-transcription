@@ -18,9 +18,13 @@ Music transcription, that consists in extracting rel- evant musical annotations 
 This support page provides the following elements: 
 
 * [Reconstructions of instrumental sound distributions](#reconstructions-of-instrumental-sound-distributions)
-* Symbol-to-signal inference(#symbol-to-signal-inference)
-* Signal-to-symbol inference(#signal-to-symbol-inference)
-* Sound morphing and free navigation(#sound-morphing-and-free-navigation)
+* [Symbol-to-signal inference](#symbol-to-signal-inference)
+* [Signal-to-symbol inference](#signal-to-symbol-inference)
+* [Sound morphing and free navigation](#sound-morphing-and-free-navigation)
+
+<p align="center">
+<img src="figures/diagram.pdf" height="75%" width="75%">
+</p>
 
 ## Reconstructions of instrumental sound distributions
 
@@ -28,29 +32,39 @@ Below we show some examples of reconstructions and transfer from random excerpts
 
 <a href="javascript:look('rec_flute');" title="Flute examples">Flute examples</a>
 <div id="rec_flute" style="display: none;">
+* Original <br/>
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/flute/ex_1_orig.mp3" type='audio/mp3'>
-</audio> (original)
+</audio> <br/>
+
+* Reconstruction <br/>
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/flute/ex_1_reco.mp3" type='audio/mp3'>
-</audio> (reconstructions)
+</audio> (reconstructions)<br/>
+
+* Transfer <br/>
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/flute/ex_1_tf_1.mp3" type='audio/mp3'>
 </audio> <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/flute/ex_1_tf_2.mp3" type='audio/mp3'>
 </audio> <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/flute/ex_1_tf_3.mp3" type='audio/mp3'>
-</audio> (transfer)
+</audio> 
 </div>
 
 <a href="javascript:look('rec_violin');" title="Violin examples">Violin examples</a>
 <div id="rec_violin" style="display: none;">
+* Original <br/>
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/violin/ex_2_orig.mp3" type='audio/mp3'>
-</audio> (original)
+</audio> (original) <br/>
+      
+* Reconstruction <br/>
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/violin/ex_2_reco.mp3" type='audio/mp3'>
-</audio> (reconstructions)
+</audio> (reconstructions)<br/>
+
+* Transfer <br/>
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/violin/ex_2_tf_1.mp3" type='audio/mp3'>
 </audio> <audio controls preload="auto" data-setup="{}" width="100%"> 
@@ -62,12 +76,17 @@ Below we show some examples of reconstructions and transfer from random excerpts
 
 <a href="javascript:look('rec_piano');" title="Piano examples">Piano examples</a>
 <div id="rec_piano" style="display: none;">
+* Original <br/>
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/piano/ex_2_orig.mp3" type='audio/mp3'>
-</audio> (original)
+</audio> (original)<br/>
+     
+* Reconstruction <br/>
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/piano/ex_2_reco.mp3" type='audio/mp3'>
-</audio> (reconstructions)
+</audio> (reconstructions)<br/>
+
+* Transfer <br/>
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/piano/ex_2_tf_1.mp3" type='audio/mp3'>
 </audio> <audio controls preload="auto" data-setup="{}" width="100%"> 
@@ -79,12 +98,17 @@ Below we show some examples of reconstructions and transfer from random excerpts
 
 <a href="javascript:look('2mx_reco');" title="2mx examples">2-mixture examples</a>
 <div id="2mx_reco" style="display: none;">
+* Original <br/>
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/2-mixture/ex_7_orig.mp3" type='audio/mp3'>
-</audio> (original)
+</audio> (original)<br/>
+      
+* Reconstruction <br/>
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/2-mixture/ex_7_reco.mp3" type='audio/mp3'>
-</audio> (reconstructions)
+</audio> (reconstructions)<br/>
+
+* Transfer <br/>
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/2-mixture/ex_7_tf_1.mp3" type='audio/mp3'>
 </audio> <audio controls preload="auto" data-setup="{}" width="100%"> 
@@ -93,6 +117,7 @@ Below we show some examples of reconstructions and transfer from random excerpts
 <source src="audio/audio_reconstructions/2-mixture/ex_7_tf_3.mp3" type='audio/mp3'>
 </audio> (transfer)
 </div>
+
 
 ## Symbol-to-signal inference
 Here we show examples of symbols to signal inference : taking a combination of labels [*octave*, *pitch class*, *dynamics*], we sample the corresponding latent distirbutions and pass it through the signal decoder (here, the midi file *arpeg-FMaj-060BPM-leg-lined.mid* of the Cantos & al. dataset)
@@ -219,6 +244,100 @@ Here, we take an incoming sequence of labels and transfer it into the signal dom
   </tr>
 </table>
 
+## Free generation
+Finally, we show some random trajectories that we directly invert with the signal auto-encoder (tribute to Tristan Murail...!)
 
 
+<table>
+  <tr>
+    <td style="text-align: center; vertical-align: middle;"> Alto-Sax </td>
+    <td style="text-align: center; vertical-align: middle;">
+      <audio controls preload="auto" data-setup="{}" width="100%"> 
+      <source src="audio/free_generation/sax/sequence_3224524924112.mp3" type='audio/mp3'>
+      </audio> 
+    </td>
+    <td style="text-align: center; vertical-align: middle;">
+      <audio controls preload="auto" data-setup="{}" width="100%"> 
+      <source src="audio/free_generation/sax/sequence_3224524924112.mp3" type='audio/mp3'>
+      </audio> 
+    </td>
+    <td style="text-align: center; vertical-align: middle;">
+      <audio controls preload="auto" data-setup="{}" width="100%"> 
+      <source src="audio/free_generation/sax/sequence_3224524924112.mp3" type='audio/mp3'>
+      </audio> 
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: center; vertical-align: middle;"> Flute </td>
+    <td style="text-align: center; vertical-align: middle;">
+      <audio controls preload="auto" data-setup="{}" width="100%"> 
+      <source src="audio/free_generation/fl/sequence_3224524924112.mp3" type='audio/mp3'>
+      </audio> 
+    </td>
+    <td style="text-align: center; vertical-align: middle;">
+      <audio controls preload="auto" data-setup="{}" width="100%"> 
+      <source src="audio/free_generation/fl/sequence_3224524924112.mp3" type='audio/mp3'>
+      </audio> 
+    </td>
+    <td style="text-align: center; vertical-align: middle;">
+      <audio controls preload="auto" data-setup="{}" width="100%"> 
+      <source src="audio/free_generation/fl/sequence_3224524924112.mp3" type='audio/mp3'>
+      </audio> 
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: center; vertical-align: middle;"> Piano </td>
+    <td style="text-align: center; vertical-align: middle;">
+      <audio controls preload="auto" data-setup="{}" width="100%"> 
+      <source src="audio/free_generation/pno/sequence_3224524924112.mp3" type='audio/mp3'>
+      </audio> 
+    </td>
+    <td style="text-align: center; vertical-align: middle;">
+      <audio controls preload="auto" data-setup="{}" width="100%"> 
+      <source src="audio/free_generation/pno/sequence_3224524924112.mp3" type='audio/mp3'>
+      </audio> 
+    </td>
+    <td style="text-align: center; vertical-align: middle;">
+      <audio controls preload="auto" data-setup="{}" width="100%"> 
+      <source src="audio/free_generation/pno/sequence_3224524924112.mp3" type='audio/mp3'>
+      </audio> 
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: center; vertical-align: middle;"> Trumpet-C </td>
+    <td style="text-align: center; vertical-align: middle;">
+      <audio controls preload="auto" data-setup="{}" width="100%"> 
+      <source src="audio/free_generation/tpc/sequence_3224524924112.mp3" type='audio/mp3'>
+      </audio> 
+    </td>
+    <td style="text-align: center; vertical-align: middle;">
+      <audio controls preload="auto" data-setup="{}" width="100%"> 
+      <source src="audio/free_generation/tpc/sequence_3224524924112.mp3" type='audio/mp3'>
+      </audio> 
+    </td>
+    <td style="text-align: center; vertical-align: middle;">
+      <audio controls preload="auto" data-setup="{}" width="100%"> 
+      <source src="audio/free_generation/tpc/sequence_3224524924112.mp3" type='audio/mp3'>
+      </audio> 
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: center; vertical-align: middle;"> Violin </td>
+    <td style="text-align: center; vertical-align: middle;">
+      <audio controls preload="auto" data-setup="{}" width="100%"> 
+      <source src="audio/free_generation/vln/sequence_3224524924112.mp3" type='audio/mp3'>
+      </audio> 
+    </td>
+    <td style="text-align: center; vertical-align: middle;">
+      <audio controls preload="auto" data-setup="{}" width="100%"> 
+      <source src="audio/free_generation/vln/sequence_3224524924112.mp3" type='audio/mp3'>
+      </audio> 
+    </td>
+    <td style="text-align: center; vertical-align: middle;">
+      <audio controls preload="auto" data-setup="{}" width="100%"> 
+      <source src="audio/free_generation/vln/sequence_3224524924112.mp3" type='audio/mp3'>
+      </audio> 
+    </td>
+  </tr>
+</table>
 
