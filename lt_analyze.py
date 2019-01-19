@@ -23,24 +23,24 @@ from lt.utils.onehot import fromOneHot, oneHot
 from lt.monitor.visualize_dimred import PCA
 from lt.modules.modules_classifier import Classifier
 import lt.monitor.synthesize_audio as audio
+from lt.criterions.criterion_scan import SCANLoss
+from lt.utils.dataloader import MixtureLoader
 
 parser = argparse.ArgumentParser()
 # import arguments
-parser.add_argument('-d', '--dbroot', type=str, help='dataset path', default='/Users/chemla/Datasets/acidsInstruments-ordinario')
-parser.add_argument('-m', '--models', type=str, nargs='+', help='model to load', default=['saves/scan_multi__Piano_Alto-Sax'])
-parser.add_argument('-t', '--transform', type=str, nargs='+', help='model to load', default='nsgt-cqt')
+parser.add_argument('-d', '--dbroot', type=str, help='dataset path', default='lt_set.npz')
+parser.add_argument('-m', '--models', type=str, nargs='+', help='model to load')
 parser.add_argument('-c', '--cuda', type=int, help='cuda device (leave -1 for GPU)', default=-1)
 parser.add_argument('-o', '--output', type=str, help='results output')
 parser.add_argument('-n', '--nb_passes', type=int, help='number of passes for loss computation (useful in case of random mixtures', default=1)
-parser.add_argument('-s', '--suffix', type=str, help="name suffix")
 # classifier arguments
 parser.add_argument('--classifier_epochs', type=int, help='number of passes for loss computation', default=1000)
-parser.add_argument('--classifier_bs', type=int, help='number of passes for loss computation', default=64)
+parser.add_argument('--classifier_bs', type=int, help='batch size for classifier trainingloss computation', default=64)
 # analysis arguments
 parser.add_argument('--make_losses', type=int, default=1 , help='compute losses')
 parser.add_argument('--make_figures', type=int, default=1 , help='make figures')
-parser.add_argument('--make_classifier', type=int, default=0, help='train baseline classifier')
-parser.add_argument('--evaluate_classifier', type=int, default=0, help='evaluate baseline classifier')
+parser.add_argument('--make_classifier', type=int, default=1, help='train baseline classifier')
+parser.add_argument('--evaluate_classifier', type=int, default=1, help='evaluate baseline classifier')
 parser.add_argument('--generate_audio', type=int, default=4, help='generate audio_examples (nb of examples)')
 parser.add_argument('--n_samples', type=int, default = 4, help="number of signal to symbol samples")
 
@@ -57,7 +57,6 @@ def get_subdatasets(audioSet, args, partitions=None, preprocessing=None):
     instrument_ids = [audioSet.classes['instrument'][d] for d in args.instruments]
     for n, iid in enumerate(instrument_ids):
         new_dataset = audioSet[np.where(audioSet.metadata['instrument'] == iid)[0]]
-        new_dataset.importData(None, audioOptions)
         if len(args.frames) == 0:
             print('taking the whole dataset...')
             new_dataset.flattenData(lambda x: x[:])
@@ -260,30 +259,7 @@ if __name__ == '__main__':
     sys.modules['models.vaes.vae_vanillaVAE'] = lt.modules.modules_vanillaVAE
     sys.modules['data'] = lt.data
 
-    audioOptions = {                      
-      "dataPrefix":args.dbroot,    
-      "dataDirectory":args.dbroot+'/data',
-      "analysisDirectory":args.dbroot+'/analysis/ordinario/'+args.transform,
-      "transformName":args.transform,                                
-      "verbose":True,                                         
-      "forceUpdate":False,
-      'tasks':['instrument', 'family', 'dynamics','pitch', 'octave'],
-      'taskCallback':[mc.importRawLabel]*3+[mc.importRawNumber]*2
-    };
-            
-    print('[Info] Loading data...')
-    # Create dataset object
-    audioSet = DatasetAudio(audioOptions);
-    # Recursively check in the given directory for data
-    audioSet.listDirectory();
-    audioSet.importMetadataTasks()
-    audioSet.classes['instrument'] = { 'English-Horn':0, 'French-Horn':1, 'Tenor-Trombone':2, 'Trumpet-C':3,
-                                        'Piano':4, 'Violin':5, 'Violoncello':6, 'Alto-Sax':7, 'Bassoon':8,
-                                        'Clarinet-Bb':9, 'Flute':10, 'Oboe':11, '_length':12 }
-    
-    audioSet.classes['pitch'] = {'A':0, 'A#':1, 'B':2, 'C':3, 'C#':4, 'D':5, 'D#':6, 'E':7, 'F':8, 'F#':9, 'G':10, 'G#':11, '_length':12}
-    audioSet.classes['octave'] = {str(i):i for i in range(9)}
-    audioSet.classes['octave']['_length'] = 9
+    audioSet = DatasetAudio.load(args.dbroot)
 
     for model in args.models:
         # Load models
@@ -371,10 +347,11 @@ if __name__ == '__main__':
                         symbol_errors.append(get_symbolic_errors(symbols, out_symbol['x_params'], distribs = symbol_dists))
                         rec_errors_tf.append(get_signal_errors(mixture, out_tf_signal[0]['out_params']))
                         symbol_errors_tf.append(get_symbolic_errors(symbols, out_tf_symbol[0]['out_params'], distribs = symbol_dists))
-         
+     
+        
+        
         # average and record losses
         if args.make_losses:
-            
             rec_errors = average_errors(rec_errors)
             symbol_errors = average_errors(symbol_errors)
             rec_errors_tf = average_errors(rec_errors_tf)
@@ -389,8 +366,10 @@ if __name__ == '__main__':
             print(rec_errors_tf)
             print('Symbolical transfer errors :')
             print(symbol_errors_tf)
+           
             
-#%% 
+            
+            
         # Generate audio examples
         if args.generate_audio:
             
@@ -447,7 +426,10 @@ if __name__ == '__main__':
                         resynthesize(out_tf_signal[s][0]['out_params'][0][np.newaxis, i], grain_len = 1.0, upsampleFactor = 500, out=output_folder+'/ex_%d_tf_%d.wav'%(i,s), preprocessing=preprocessing)
                     fig = plot_reconstruction(mixture[i], out_signal['x_params'][0][i], [o[0]['out_params'][0][i] for o in out_tf_signal])
                     fig.savefig(output_folder+'/ex_%d.pdf'%i)
-#%%            
+
+
+
+
         # Train classifier
         classifier = None
         full_mixtures = torch.cat(mixture_buff, dim=0)     
