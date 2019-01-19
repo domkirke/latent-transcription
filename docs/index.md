@@ -23,7 +23,7 @@ This support page provides the following elements:
 * [Sound morphing and free navigation](#sound-morphing-and-free-navigation)
 
 <p align="center">
-<img src="figures/diagram.pdf" height="75%" width="75%">
+<img src="figures/diagram.png" height="70%" width="70%">
 </p>
 
 ## Reconstructions of instrumental sound distributions
@@ -40,7 +40,7 @@ Below we show some examples of reconstructions and transfer from random excerpts
 * Reconstruction <br/>
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/flute/ex_1_reco.mp3" type='audio/mp3'>
-</audio> (reconstructions)<br/>
+</audio> <br/>
 
 * Transfer <br/>
 <audio controls preload="auto" data-setup="{}" width="100%"> 
@@ -57,12 +57,12 @@ Below we show some examples of reconstructions and transfer from random excerpts
 * Original <br/>
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/violin/ex_2_orig.mp3" type='audio/mp3'>
-</audio> (original) <br/>
+</audio> <br/>
       
 * Reconstruction <br/>
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/violin/ex_2_reco.mp3" type='audio/mp3'>
-</audio> (reconstructions)<br/>
+</audio> <br/>
 
 * Transfer <br/>
 <audio controls preload="auto" data-setup="{}" width="100%"> 
@@ -71,7 +71,7 @@ Below we show some examples of reconstructions and transfer from random excerpts
 <source src="audio/audio_reconstructions/violin/ex_2_tf_2.mp3" type='audio/mp3'>
 </audio> <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/violin/ex_2_tf_3.mp3" type='audio/mp3'>
-</audio> (transfer)
+</audio> 
 </div>
 
 <a href="javascript:look('rec_piano');" title="Piano examples">Piano examples</a>
@@ -79,12 +79,12 @@ Below we show some examples of reconstructions and transfer from random excerpts
 * Original <br/>
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/piano/ex_2_orig.mp3" type='audio/mp3'>
-</audio> (original)<br/>
+</audio> <br/>
      
 * Reconstruction <br/>
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/piano/ex_2_reco.mp3" type='audio/mp3'>
-</audio> (reconstructions)<br/>
+</audio> <br/>
 
 * Transfer <br/>
 <audio controls preload="auto" data-setup="{}" width="100%"> 
@@ -93,7 +93,7 @@ Below we show some examples of reconstructions and transfer from random excerpts
 <source src="audio/audio_reconstructions/piano/ex_2_tf_2.mp3" type='audio/mp3'>
 </audio> <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/piano/ex_2_tf_3.mp3" type='audio/mp3'>
-</audio> (transfer)
+</audio>
 </div>
 
 <a href="javascript:look('2mx_reco');" title="2mx examples">2-mixture examples</a>
@@ -101,12 +101,12 @@ Below we show some examples of reconstructions and transfer from random excerpts
 * Original <br/>
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/2-mixture/ex_7_orig.mp3" type='audio/mp3'>
-</audio> (original)<br/>
+</audio> <br/>
       
 * Reconstruction <br/>
 <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/2-mixture/ex_7_reco.mp3" type='audio/mp3'>
-</audio> (reconstructions)<br/>
+</audio> <br/>
 
 * Transfer <br/>
 <audio controls preload="auto" data-setup="{}" width="100%"> 
@@ -115,7 +115,7 @@ Below we show some examples of reconstructions and transfer from random excerpts
 <source src="audio/audio_reconstructions/2-mixture/ex_7_tf_2.mp3" type='audio/mp3'>
 </audio> <audio controls preload="auto" data-setup="{}" width="100%"> 
 <source src="audio/audio_reconstructions/2-mixture/ex_7_tf_3.mp3" type='audio/mp3'>
-</audio> (transfer)
+</audio> 
 </div>
 
 
