@@ -9,6 +9,7 @@ Created on Thu Dec 13 11:18:19 2018
 import matplotlib
 matplotlib.use('agg')
 import copy, argparse, numpy as np, torch, os, torch.nn as nn, sys
+import torch.distributions as dist
 
 from skimage.transform import resize
 import librosa
@@ -21,7 +22,8 @@ import lt.data.metadata as mc
 from lt.criterions.criterion_logdensities import log_normal, log_bernoulli, log_categorical
 from lt.utils.onehot import fromOneHot, oneHot
 from lt.monitor.visualize_dimred import PCA
-from lt.modules.modules_classifier import Classifier
+from lt.modules.modules_baselines import Classifier, Symbol2SignalConvNet, Signal2SymbolConvNet
+
 import lt.monitor.synthesize_audio as audio
 from lt.criterions.criterion_scan import SCANLoss
 from lt.utils.dataloader import MixtureLoader
@@ -35,12 +37,14 @@ parser.add_argument('-o', '--output', type=str, help='results output')
 parser.add_argument('-n', '--nb_passes', type=int, help='number of passes for loss computation (useful in case of random mixtures', default=1)
 # classifier arguments
 parser.add_argument('--classifier_epochs', type=int, help='number of passes for loss computation', default=1000)
-parser.add_argument('--classifier_bs', type=int, help='batch size for classifier trainingloss computation', default=64)
+parser.add_argument('--classifier_bs', type=int, help='batch size for classifier training loss computation', default=64)
 # analysis arguments
 parser.add_argument('--make_losses', type=int, default=1 , help='compute losses')
 parser.add_argument('--make_figures', type=int, default=1 , help='make figures')
 parser.add_argument('--make_classifier', type=int, default=1, help='train baseline classifier')
 parser.add_argument('--evaluate_classifier', type=int, default=1, help='evaluate baseline classifier')
+parser.add_argument('--conv_classifier', type=int, default=1, help='evaluate baseline convolutional classifier')
+parser.add_argument('--conv_synth', type=int, default=1, help='evaluate baseline convolutional classifier')
 parser.add_argument('--generate_audio', type=int, default=4, help='generate audio_examples (nb of examples)')
 parser.add_argument('--n_samples', type=int, default = 4, help="number of signal to symbol samples")
 
@@ -103,6 +107,116 @@ def get_symbolic_datasets(audioSet, datasets, args):
         meta_datasets.append(audioSetMeta)
     return meta_datasets
 
+class LTDataset(torch.utils.data.Dataset):
+    def __init__(self, audio_dataset, symbol_dataset, mix_input=False, balance=0.8):
+        self.audio_dataset = audio_dataset
+        self.symbol_dataset = symbol_dataset
+        self.mix_input = mix_input
+        if mix_input:
+            data_dim = audio_dataset.data[0].shape[1] if issubclass(type(audio_dataset), list) else audio_dataset.shape[1]
+        else:
+            data_dim = sum(sum([[a.data[i].shape[1] for i in range(len(a.data))] for a in audio_dataset], []))
+        balance = int(data_dim*balance)
+        if issubclass(type(audio_dataset), list):
+            random_ids = [np.random.permutation(data_dim)] * len(audio_dataset)
+            self.partitions = {'train':[random_ids[i][:balance] for i in range(len(self.audio_dataset))],
+                               'test':[random_ids[i][balance:] for i in range(len(self.audio_dataset))]}
+        else:
+            random_ids = np.random.permutation(data_dim)
+            self.partitions = {'train':random_ids[:balance], 'test':random_ids[balance:]}
+        self.current_partition = 'train'
+
+    def train(self):
+        self.current_partition = 'train'
+    def eval(self):
+        self.current_partition = 'test'
+
+    def __len__(self):
+        if issubclass(type(self.partitions[self.current_partition]), list):
+            return self.partitions[self.current_partition][0].shape[0]
+        else:
+            return self.partitions[self.current_partition].shape[0]
+
+    def __getitem__(self, item):
+        if issubclass(type(self.audio_dataset), list):
+            audio_data = []; symbol_data = []
+            for i, current_set in enumerate(self.audio_dataset):
+                if issubclass(type(current_set.data), list):
+                    current_data = [current_set.data[j][self.partitions[self.current_partition][i]][item] for j in range(len(current_set.data))]
+                else:
+                    current_data = current_set.data[self.partitions[i][self.current_partition]]
+
+                if issubclass(type(self.symbol_dataset[0].data), list):
+                    current_symbol = [[data[self.partitions[self.current_partition][i][item]] for data in dataset.data] for dataset in self.symbol_dataset]
+                else:
+                    current_symbol = [dataset.data[self.partitions[self.current_partition][i][item]] for dataset in self.symbol_dataset]
+                audio_data.extend(current_data); symbol_data.extend(current_symbol)
+
+            if self.mix_input:
+                audio_data = np.sum(audio_data, axis=1)
+            else:
+                if len(audio_data[0].shape) == 1:
+                    audio_data = np.concatenate(audio_data)
+                else:
+                    audio_data = np.concatenate(audio_data, axis=1)
+        else:
+            audio_data = self.audio_dataset.data[self.partitions[self.current_partition][item]].astype('float32')
+            symbol_data = [data[self.partitions[self.current_partition][item]] for data in self.symbol_dataset.data]
+
+        return audio_data, symbol_data
+
+
+
+def train_convnet(convnet, dataset, loss, train_options={}):
+    n_epochs = train_options.get('epochs', 500)
+    n_saves = train_options.get('saves', 250)
+    lr = train_options.get('lr', 1e-4)
+    cuda_device = train_options.get('cuda', -1)
+    savepath = train_options.get('savepath', 'conv_results.t7')
+    batch_size = train_options.get('batch_size', 64)
+
+    optimizer = torch.optim.Adam(convnet.parameters(), lr=lr)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=100, factor=0.2, eps=1e-10)
+
+    train_losses = []
+    test_losses = []
+    for epoch in range(n_epochs):
+        dataset.train(); convnet.train()
+        loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size)
+        full_loss = 0.
+        for x, y in loader:
+            optimizer.zero_grad()
+            if cuda_device > -1:
+                x = x.cuda(cuda_device)
+                y = [yy.cuda(cuda_device) for yy in y]
+            out = convnet(x.unsqueeze(1).float())
+            current_loss = loss(out, y)
+            current_loss.backward()
+            optimizer.step()
+            full_loss += float(current_loss)
+        print('[Train] epoch %d : %f'%(epoch, full_loss))
+        train_losses.append(full_loss)
+
+        dataset.eval(); convnet.eval()
+        with torch.no_grad():
+            test_data, test_symbols = dataset[:]
+            test_data = torch.from_numpy(test_data).float()
+            if cuda_device > -1:
+                test_data = test_data.cuda(cuda_device)
+                if issubclass(type(yy), list):
+                    test_symbols = [yy.cuda(cuda_device) for yy in test_symbols]
+                else:
+                    test_symbols = test_symbols.cuda(cuda_device)
+            test_out = convnet(test_data.unsqueeze(1))
+            test_loss = loss(test_out, test_symbols)
+            scheduler.step(test_loss)
+            test_losses.append(float(test_loss))
+        print('[Test] epoch %d : %f'%(epoch, test_loss))
+
+        if epoch % n_saves == 0:
+            torch.save(convnet.state_dict(), savepath+'.t7')
+            np.save(savepath+'_losses.npy', {'train':train_losses, 'test':test_losses})
+
 
 #%% Distance functions
     
@@ -133,7 +247,17 @@ def log_prob_classif(labels, reconstruction, distrib=None):
             return log_bernoulli(labels, reconstruction)
         else:
             return 
-    
+
+def nll_loss(out, target):
+    return sum([torch.nn.functional.nll_loss(out[i], fromOneHot(torch.tensor(target[i])).long()) for i in range(len(out))])
+
+def mse_loss(out, target):
+    if issubclass(type(target[0]), np.ndarray):
+        target[0] = torch.from_numpy(target[0])
+    return torch.nn.functional.mse_loss(out.squeeze(), target[0].float())
+
+
+
 def get_confusion_matrix(symbols, reco):
     if issubclass(type(symbols), list):
         cf = [get_confusion_matrix(symbols[i], reco[i]) for i in range(len(symbols))]
@@ -256,7 +380,7 @@ if __name__ == '__main__':
     # package translation hack
     sys.modules['models']=lt
     sys.modules['models.vaes']=lt.modules
-    sys.modules['models.vaes.vae_vanillaVAE'] = lt.modules.modules_vanillaVAE
+    sys.modules['models.vaes.vae_vanillaVAE'] = lt.modules.vanillaVAE
     sys.modules['data'] = lt.data
 
     audioSet = DatasetAudio.load(args.dbroot)
@@ -530,4 +654,23 @@ if __name__ == '__main__':
 
             print('BASELINE ERRORS : ')
             print(errors)
-   
+
+
+        if args.conv_classifier:
+            in_params = {'dim':current_datasets[0].data.shape[1]}
+            out_params = [{'dim': meta_datasets[0].data[i].shape[1], 'dist':dist.Categorical} for i in range(len(meta_datasets[0].data))]
+            hidden_params = {'channels': [1,32], 'kernel_size':[11], 'stride':[2,2], 'conv_dim':1, 'dim':800, 'nlayers':1, 'dropout':0.3}
+            convnet = Signal2SymbolConvNet(in_params, hidden_params, out_params)
+            test_in = torch.from_numpy(current_datasets[0].data[:10]).float().view(10,1,410)
+            train_options = {'savepath':model+'/conv_results'}
+            train_convnet(convnet, LTDataset(current_datasets[0], meta_datasets[0]), nll_loss)
+
+        if args.conv_synth:
+            in_params = [{'dim': meta_datasets[0].data[i].shape[1], 'dist':dist.Categorical} for i in range(len(meta_datasets[0].data))]
+            out_params = {'dim':current_datasets[0].data.shape[1]}
+            hidden_params = {'channels': [1, 16, 32], 'kernel_size':[11, 5], 'stride':[2,2], 'conv_dim':1, 'dim':200, 'nlayers':1, 'dropout':0.3}
+            deconvnet = Symbol2SignalConvNet(in_params, hidden_params, out_params)
+            test_in = torch.from_numpy(current_datasets[0].data[:10]).float().view(10,1,410)
+            train_options = {'savepath':model+'/deconv_results'}
+            train_convnet(deconvnet, LTDataset(meta_datasets, current_datasets), mse_loss)
+            print('coucou')

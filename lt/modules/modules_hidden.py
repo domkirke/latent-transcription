@@ -19,9 +19,8 @@ import sys
 sys.path.append('../..')
 
 from .modules_utils import init_module
-from .modules_bottleneck import DLGMLayer
+from .modules_bottleneck import MLP, DLGMLayer
 from .modules_distribution import get_module_from_density
-from . import DEFAULT_MODULE
 
 
 # HiddenModule is an abstraction for inter-layer modules
@@ -58,7 +57,7 @@ class HiddenModule(nn.Module):
         if issubclass(type(phidden), list):
             hidden_modules = [self.make_hidden_layers(pins, ph, *args, **kwargs) for ph in phidden]
         else:
-            module_class = phidden.get('class', DEFAULT_MODULE)
+            module_class = phidden.get('class', MLP)
             hidden_modules = module_class(pins, phidden, *args, **kwargs)
         return hidden_modules
             

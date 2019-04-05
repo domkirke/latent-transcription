@@ -1,4 +1,4 @@
-FILES_TO_CONVERT=`find . -name *.wav`
+FILES_TO_CONVERT=`find free_generation -name *.wav`
 
 for file in ${FILES_TO_CONVERT[@]}
 do

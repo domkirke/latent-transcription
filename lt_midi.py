@@ -16,7 +16,7 @@ import lt
 import lt.data.metadata as mc
 from lt.data.audio import DatasetAudio
 from lt.data.preprocessing import Magnitude
-from lt.modules.modules_classifier import Classifier
+from lt.modules.modules_baselines import Classifier
 
 import lt.monitor.synthesize_audio as audio
 
