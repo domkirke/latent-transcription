@@ -253,17 +253,22 @@ Finally, we show some random trajectories that we directly invert with the signa
     <td style="text-align: center; vertical-align: middle;"> Alto-Sax </td>
     <td style="text-align: center; vertical-align: middle;">
       <audio controls preload="auto" data-setup="{}" width="100%"> 
-      <source src="audio/free_generation/sax/sequence_3224524924112.mp3" type='audio/mp3'>
+      <source src="audio/free_generation/sax/circle_4.mp3" type='audio/mp3'>
       </audio> 
     </td>
     <td style="text-align: center; vertical-align: middle;">
       <audio controls preload="auto" data-setup="{}" width="100%"> 
-      <source src="audio/free_generation/sax/sequence_3224524924112.mp3" type='audio/mp3'>
+      <source src="audio/free_generation/sax/helix_0.mp3" type='audio/mp3'>
       </audio> 
     </td>
     <td style="text-align: center; vertical-align: middle;">
       <audio controls preload="auto" data-setup="{}" width="100%"> 
-      <source src="audio/free_generation/sax/sequence_3224524924112.mp3" type='audio/mp3'>
+      <source src="audio/free_generation/sax/helix_3.mp3" type='audio/mp3'>
+      </audio> 
+    </td>
+    <td style="text-align: center; vertical-align: middle;">
+      <audio controls preload="auto" data-setup="{}" width="100%"> 
+      <source src="audio/free_generation/sax/helix_6.mp3" type='audio/mp3'>
       </audio> 
     </td>
   </tr>
@@ -271,17 +276,22 @@ Finally, we show some random trajectories that we directly invert with the signa
     <td style="text-align: center; vertical-align: middle;"> Flute </td>
     <td style="text-align: center; vertical-align: middle;">
       <audio controls preload="auto" data-setup="{}" width="100%"> 
-      <source src="audio/free_generation/fl/sequence_3224524924112.mp3" type='audio/mp3'>
+      <source src="audio/free_generation/fl/circle_2.mp3" type='audio/mp3'>
       </audio> 
     </td>
     <td style="text-align: center; vertical-align: middle;">
       <audio controls preload="auto" data-setup="{}" width="100%"> 
-      <source src="audio/free_generation/fl/sequence_3224524924112.mp3" type='audio/mp3'>
+      <source src="audio/free_generation/fl/helix_1.mp3" type='audio/mp3'>
       </audio> 
     </td>
     <td style="text-align: center; vertical-align: middle;">
       <audio controls preload="auto" data-setup="{}" width="100%"> 
-      <source src="audio/free_generation/fl/sequence_3224524924112.mp3" type='audio/mp3'>
+      <source src="audio/free_generation/fl/helix_2.mp3" type='audio/mp3'>
+      </audio> 
+    </td>
+    <td style="text-align: center; vertical-align: middle;">
+      <audio controls preload="auto" data-setup="{}" width="100%"> 
+      <source src="audio/free_generation/fl/helix_3.mp3" type='audio/mp3'>
       </audio> 
     </td>
   </tr>
@@ -289,17 +299,22 @@ Finally, we show some random trajectories that we directly invert with the signa
     <td style="text-align: center; vertical-align: middle;"> Piano </td>
     <td style="text-align: center; vertical-align: middle;">
       <audio controls preload="auto" data-setup="{}" width="100%"> 
-      <source src="audio/free_generation/pno/sequence_3224524924112.mp3" type='audio/mp3'>
+      <source src="audio/free_generation/pno/circle_3.mp3" type='audio/mp3'>
       </audio> 
     </td>
     <td style="text-align: center; vertical-align: middle;">
       <audio controls preload="auto" data-setup="{}" width="100%"> 
-      <source src="audio/free_generation/pno/sequence_3224524924112.mp3" type='audio/mp3'>
+      <source src="audio/free_generation/pno/circle_4.mp3" type='audio/mp3'>
       </audio> 
     </td>
     <td style="text-align: center; vertical-align: middle;">
       <audio controls preload="auto" data-setup="{}" width="100%"> 
-      <source src="audio/free_generation/pno/sequence_3224524924112.mp3" type='audio/mp3'>
+      <source src="audio/free_generation/pno/helix_0.mp3" type='audio/mp3'>
+      </audio> 
+    </td>
+    <td style="text-align: center; vertical-align: middle;">
+      <audio controls preload="auto" data-setup="{}" width="100%"> 
+      <source src="audio/free_generation/pno/helix_4.mp3" type='audio/mp3'>
       </audio> 
     </td>
   </tr>
@@ -307,17 +322,22 @@ Finally, we show some random trajectories that we directly invert with the signa
     <td style="text-align: center; vertical-align: middle;"> Trumpet-C </td>
     <td style="text-align: center; vertical-align: middle;">
       <audio controls preload="auto" data-setup="{}" width="100%"> 
-      <source src="audio/free_generation/tpc/sequence_3224524924112.mp3" type='audio/mp3'>
+      <source src="audio/free_generation/tpc/circle_8.mp3" type='audio/mp3'>
       </audio> 
     </td>
     <td style="text-align: center; vertical-align: middle;">
       <audio controls preload="auto" data-setup="{}" width="100%"> 
-      <source src="audio/free_generation/tpc/sequence_3224524924112.mp3" type='audio/mp3'>
+      <source src="audio/free_generation/tpc/helix_1.mp3" type='audio/mp3'>
       </audio> 
     </td>
     <td style="text-align: center; vertical-align: middle;">
       <audio controls preload="auto" data-setup="{}" width="100%"> 
-      <source src="audio/free_generation/tpc/sequence_3224524924112.mp3" type='audio/mp3'>
+      <source src="audio/free_generation/tpc/helix_5.mp3" type='audio/mp3'>
+      </audio> 
+    </td>
+    <td style="text-align: center; vertical-align: middle;">
+      <audio controls preload="auto" data-setup="{}" width="100%"> 
+      <source src="audio/free_generation/tpc/helix_9.mp3" type='audio/mp3'>
       </audio> 
     </td>
   </tr>
@@ -325,17 +345,22 @@ Finally, we show some random trajectories that we directly invert with the signa
     <td style="text-align: center; vertical-align: middle;"> Violin </td>
     <td style="text-align: center; vertical-align: middle;">
       <audio controls preload="auto" data-setup="{}" width="100%"> 
-      <source src="audio/free_generation/vln/sequence_3224524924112.mp3" type='audio/mp3'>
+      <source src="audio/free_generation/vln/circle_5.mp3" type='audio/mp3'>
       </audio> 
     </td>
     <td style="text-align: center; vertical-align: middle;">
       <audio controls preload="auto" data-setup="{}" width="100%"> 
-      <source src="audio/free_generation/vln/sequence_3224524924112.mp3" type='audio/mp3'>
+      <source src="audio/free_generation/vln/circle_6.mp3" type='audio/mp3'>
       </audio> 
     </td>
     <td style="text-align: center; vertical-align: middle;">
       <audio controls preload="auto" data-setup="{}" width="100%"> 
-      <source src="audio/free_generation/vln/sequence_3224524924112.mp3" type='audio/mp3'>
+      <source src="audio/free_generation/vln/helix_1.mp3" type='audio/mp3'>
+      </audio> 
+    </td>
+    <td style="text-align: center; vertical-align: middle;">
+      <audio controls preload="auto" data-setup="{}" width="100%"> 
+      <source src="audio/free_generation/vln/helix_5.mp3" type='audio/mp3'>
       </audio> 
     </td>
   </tr>
